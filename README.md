@@ -1,3 +1,13 @@
+
+| Projekt | CI/CD (Current) | Test Next (Dev) |
+| :--- | :---: | :---: |
+| **[elpris-kvart](https://github.com/AlleHj/elpris-kvart)** | [![CI](https://github.com/AlleHj/elpris-kvart/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/elpris-kvart/actions) | [![Next](https://github.com/AlleHj/elpris-kvart/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/elpris-kvart/actions) |
+| **[knx_doubleclick](https://github.com/AlleHj/knx_doubleclick)** | [![CI](https://github.com/AlleHj/knx_doubleclick/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/knx_doubleclick/actions) | [![Next](https://github.com/AlleHj/knx_doubleclick/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/knx_doubleclick/actions) |
+| **[linux_updates](https://github.com/AlleHj/linux_updates)** | [![CI](https://github.com/AlleHj/linux_updates/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/linux_updates/actions) | [![Next](https://github.com/AlleHj/linux_updates/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/linux_updates/actions) |
+| **[mail_agent](https://github.com/AlleHj/mail_agent)** | [![CI](https://github.com/AlleHj/mail_agent/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/mail_agent/actions) | [![Next](https://github.com/AlleHj/mail_agent/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/mail_agent/actions) |
+| **[smart_ev_charging](https://github.com/AlleHj/smart_ev_charging)** | [![CI](https://github.com/AlleHj/smart_ev_charging/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/smart_ev_charging/actions) | [![Next](https://github.com/AlleHj/smart_ev_charging/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/smart_ev_charging/actions) |
+| **[testar lite](https://github.com/AlleHj/testar lite)** | [![CI](https://github.com/AlleHj/testar lite/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/testar lite/actions) | [![Next](https://github.com/AlleHj/testar lite/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/testar lite/actions) |
+| **[varmegolv_kontroll](https://github.com/AlleHj/varmegolv_kontroll)** | [![CI](https://github.com/AlleHj/varmegolv_kontroll/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/varmegolv_kontroll/actions) | [![Next](https://github.com/AlleHj/varmegolv_kontroll/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/varmegolv_kontroll/actions) |
 # 👋 Hej där! Jag är Alexander (AlleHj)
 
 Välkommen till min utvecklarprofil. Jag är en hemautomations-entusiast som bygger skräddarsydda integrationer och verktyg för **Home Assistant**.
