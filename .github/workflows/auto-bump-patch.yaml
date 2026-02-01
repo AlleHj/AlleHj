@@ -1,0 +1,62 @@
+name: Auto Bump Patch (z++)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - 'custom_components/**'
+
+permissions:
+  contents: write
+
+jobs:
+  bump-patch:
+    if: "!contains(github.event.head_commit.message, 'skip-bump') && !contains(github.event.head_commit.message, 'Release') && !contains(github.event.head_commit.message, 'skip ci')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }} # <--- FIX: Krävs för att pusha commiten
+          fetch-depth: 0
+
+      - name: Bump Patch Version
+        id: bump
+        run: |
+          MANIFEST=$(find custom_components -name manifest.json | head -n 1)
+
+          if [ -z "$MANIFEST" ]; then
+            echo "Error: Could not find manifest.json in custom_components/"
+            exit 1
+          fi
+
+          echo "Found manifest at: $MANIFEST"
+
+          CURRENT_VERSION=$(jq -r '.version' $MANIFEST)
+          IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
+          NEW_PATCH=$((patch + 1))
+          NEW_VERSION="$major.$minor.$NEW_PATCH"
+
+          jq --arg v "$NEW_VERSION" '.version = $v' $MANIFEST > tmp.json && mv tmp.json $MANIFEST
+
+          if [ -f README.md ]; then
+            sed -i -E "s/(version-)$CURRENT_VERSION(-[a-zA-Z]+\.svg)/\1$NEW_VERSION\2/g" README.md
+          fi
+
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Version Bot"
+          git config --global user.email "bot@noreply.github.com"
+
+          git add .
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            # PAT-token används implicit via checkout-steget ovan
+            git commit -m "chore: bump version to ${{ steps.bump.outputs.version }} [skip ci]"
+            git push
+          fi

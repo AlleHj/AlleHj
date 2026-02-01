@@ -1,47 +1,68 @@
-# 👋 Hej där! Jag är Alexander (AlleHj)
+![Version](https://img.shields.io/badge/version-0.19.0-blue.svg)
+![Home Assistant](https://img.shields.io/badge/home%20assistant-component-orange.svg)
 
-Välkommen till min utvecklarprofil. Jag är en hemautomations-entusiast som bygger skräddarsydda integrationer och verktyg för **Home Assistant**.
+Mail Agent för Home Assistant
+Version: 0.19.0
+Uppdaterad: 2025-12-18
 
-Mitt fokus ligger på att göra det smarta hemmet mer stabilt, energieffektivt och anpassat för nordiska förhållanden.
+Mail Agent är en intelligent "Custom Component" för Home Assistant som automatiserar hanteringen av inkommande post. Genom att kombinera Google Gemini (Generativ AI) med traditionell e-posthantering (IMAP/SMTP), fungerar komponenten som en smart sekreterare som läser dina mail, förstår innehållet (inklusive bilagor) och automatiskt bokar in möten i din kalender.
 
----
+🚀 Nyheter i v0.18.0 (Restore & Stabilitet)
+Denna version fokuserar på dataintegritet och driftstabilitet:
+💾 Restore-funktionalitet: Sensorerna (t.ex. "Emails Processed") nollställs inte längre när du ändrar inställningar eller startar om Home Assistant. De minns sitt senaste värde.
+🛡️ Ökad Stabilitet: Fixar för "Thread Safety" och robustare hantering av IMAP-svar (förhindrar krascher vid oväntade mail-format).
+👁️ Full Insyn: Nya sensorer ger dig kontroll över vad agenten gör i realtid.
 
-## 🚦 Integration Status Dashboard
+📊 Nya Entiteter
+Integrationen skapar nu följande entiteter för varje konfigurerat konto:
+binary_sensor.mail_agent_scanning: Visar PÅ när agenten aktivt söker efter och bearbetar mail.
+binary_sensor.mail_agent_connected: Visar status för anslutningen till IMAP-servern.
+sensor.mail_agent_last_scan: Tidsstämpel för när inkorgen senast kontrollerades framgångsrikt.
+sensor.mail_agent_last_event_summary: Visar sammanfattningen av det senast hittade eventet (t.ex. "Tandläkartid 14:00").
+sensor.mail_agent_emails_processed: En räknare som visar totalt antal mail agenten har analyserat.
 
-Här kan du se realtidsstatus för mina integrationer. Alla projekt testas automatiskt mot både nuvarande och kommande versioner av Home Assistant för att garantera stabilitet.
-<!-- START_TABLE -->
-**[⚙️ Gå till Centralstyrning (ha-workflows)](https://github.com/AlleHj/ha-workflows)**
+📋 Huvudfunktioner
+🧠 AI-Driven Analys: Använder Google Gemini för att förstå naturligt språk i mail och bifogade PDF-kallelser.
+📅 Automatisk Kalenderbokning: Extraherar tid, plats och sammanfattning och skapar händelser i din kalender.
+🔒 Trådsäkerhet: "Global Scanning Lock" förhindrar att samma mail bearbetas två gånger samtidigt.
+📧 Robust SMTP: Skickar multipart-mail endast vid behov och hanterar bilagor korrekt.
+🎨 Dashboard-ready: Bygg snygga statuspaneler i Lovelace med de nya sensorerna.
 
-| Projekt | CI/CD (Current) | Test Next (Dev) |
-| :--- | :---: | :---: |
-| **[elpris-kvart](https://github.com/AlleHj/elpris-kvart)** | [![CI](https://github.com/AlleHj/elpris-kvart/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/elpris-kvart/actions) | [![Next](https://github.com/AlleHj/elpris-kvart/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/elpris-kvart/actions) |
-| **[knx_doubleclick](https://github.com/AlleHj/knx_doubleclick)** | [![CI](https://github.com/AlleHj/knx_doubleclick/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/knx_doubleclick/actions) | [![Next](https://github.com/AlleHj/knx_doubleclick/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/knx_doubleclick/actions) |
-| **[linux_updates](https://github.com/AlleHj/linux_updates)** | [![CI](https://github.com/AlleHj/linux_updates/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/linux_updates/actions) | [![Next](https://github.com/AlleHj/linux_updates/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/linux_updates/actions) |
-| **[mail_agent](https://github.com/AlleHj/mail_agent)** | [![CI](https://github.com/AlleHj/mail_agent/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/mail_agent/actions) | [![Next](https://github.com/AlleHj/mail_agent/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/mail_agent/actions) |
-| **[smart_ev_charging](https://github.com/AlleHj/smart_ev_charging)** | [![CI](https://github.com/AlleHj/smart_ev_charging/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/smart_ev_charging/actions) | [![Next](https://github.com/AlleHj/smart_ev_charging/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/smart_ev_charging/actions) |
-| **[varmegolv_kontroll](https://github.com/AlleHj/varmegolv_kontroll)** | [![CI](https://github.com/AlleHj/varmegolv_kontroll/actions/workflows/ci.yaml/badge.svg)](https://github.com/AlleHj/varmegolv_kontroll/actions) | [![Next](https://github.com/AlleHj/varmegolv_kontroll/actions/workflows/next.yaml/badge.svg)](https://github.com/AlleHj/varmegolv_kontroll/actions) |
-<!-- END_TABLE -->
+🔧 Installation
+Ladda ner mappen mail_agent och placera den i /config/custom_components/.
+Starta om Home Assistant.
+Gå till Inställningar -> Enheter & Tjänster -> Lägg till integration.
+Sök efter "Mail Agent" och följ guiden.
 
-## 🛠️ Teknisk Stack & Arbetsflöde
+⚙️ Konfiguration (UI)
+All konfiguration sker via gränssnittet. Inga YAML-filer behövs.
+Anslutning: IMAP/SMTP server, port, användare, lösenord.
+AI: Google Gemini API-nyckel och modellnamn.
+Integrationer: Välj kalendrar och notifieringstjänster.
+Logik: Anpassa sökintervall och debug-nivå.
 
-För att hålla hög kvalitet använder jag en centraliserad hantering av alla mina repon.
+### Nyhet: Typ "Förvaltare" (Fakturahantering)
+Du kan nu välja mellan två arbetslägen för Mail Agent:
+1. **Tolka kallelse (Standard):** Letar efter möten och bokningar för kalendern.
+2. **Förvaltare (Fakturor):** En ny specialiserad roll för att hantera inkommande fakturor och förvaltningspost.
 
-* **Språk:** Python 🐍, YAML
-* **Plattform:** Home Assistant (Custom Components)
-* **Automation:** GitHub Actions (Matrix strategies)
-* **Kvalitetskontroll:** Ruff (Linting), Pytest (Enhetstester), Hassfest (Validering)
+**Funktioner i Förvaltare-läget:**
+*   **AI-analys:** Extraherar avsändare, förfallodatum, belopp och fakturanummer/OCR.
+*   **Google Drive Lagring:** Sparar automatiskt PDF-bilagor (eller skapar PDF av mailet) i din Google Drive.
+    *   Struktur: `Grundmapp/ÅÅÅÅ/Månad/` (t.ex. `Fakturor/2026/Februari/`).
+    *   Filnamn: `Avsändare_Datum_Fakturanr_Summa_ID.pdf`.
+*   **Notifieringar:** Skickar en Persistent Notification i HA med detaljer och länk till Drive-filen.
 
-> *Dessa repon underhålls automatiskt via [ha-workflows](https://github.com/AlleHj/ha-workflows), vilket säkerställer att alla projekt alltid har de senaste testerna och inställningarna.*
+**Konfiguration för Förvaltare:**
+För att aktivera detta läge behöver du:
+1. Välja "Förvaltare" under inställningar.
+2. Skapa ett **Google Cloud Service Account** och ladda ner JSON-nyckelfilen.
+3. Dela din Google Drive-mapp med Service Account-mailadressen.
+4. Ange sökvägen till JSON-filen (t.ex. `/config/service_account.json`) och namnet på grundmappen i konfigurationen.
 
----
+🛠️ Felsökning
+Sensorerna visar "Unknown"? Vänta till nästa sökintervall eller tvinga en omladdning av integrationen, så kommer de igång.
+Inga mail hittas? Kontrollera att mailen är markerade som Olästa (Unseen) i din inkorg.
 
-### Vill du använda mina integrationer?
-De flesta av mina komponenter är redo att installeras via **HACS** (Home Assistant Community Store) som "Custom Repositories".
-
-1. Gå till HACS i din Home Assistant.
-2. Välj "Integrations" -> Meny (tre prickar) -> "Custom repositories".
-3. Klistra in länken till något av projekten ovan (t.ex. `AlleHj/smart_ev_charging`).
-4. Välj kategori **Integration** och klicka på **Add**.
-
----
-*Generated with ❤️ by AlleHj's Automation Bots*
+📄 Licens
+Open Source för personligt bruk.
