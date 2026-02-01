@@ -5,7 +5,6 @@ import json
 import os
 import uuid
 from datetime import datetime
-from pathlib import Path
 
 from google import genai
 from google.oauth2 import service_account
